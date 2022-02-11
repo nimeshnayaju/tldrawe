@@ -1,5 +1,5 @@
 {
-  "name": "@tldraw/tldraw",
+  "name": "@tldrawe/tldraw",
   "version": "1.6.1",
   "description": "A tiny little drawing app (editor)",
   "author": "@steveruizok",
@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@swc-node/jest": "^1.4.3",
+    "esbuild": "^0.14.21",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@types/node": "^17.0.14",
@@ -92,7 +93,7 @@
       "<rootDir>/src/test/"
     ],
     "moduleNameMapper": {
-      "@tldraw/tldraw": "<rootDir>/src",
+      "@tldrawe/tldraw": "<rootDir>/src",
       "\\~(.*)": "<rootDir>/src/$1"
     }
   },

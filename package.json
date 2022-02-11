@@ -1,0 +1,45 @@
+{
+  "name": "@tldrawe/monorepo",
+  "workspaces": [
+    "packages/tldraw",
+    "apps/extension"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "build:www": "yarn build:packages && cd apps/www && yarn build",
+    "build:packages": "lerna run build:packages --stream",
+    "build:apps": "lerna run build:apps",
+    "start": "yarn build:packages && lerna run start --stream --parallel",
+    "start:all": "yarn build:packages && lerna run start:all --stream --parallel",
+    "start:www": "yarn build:packages && lerna run start --parallel & cd apps/www && yarn dev",
+    "clean": "lerna run clean --parallel",
+    "publish:patch": "yarn build:packages && yarn test && lerna publish",
+    "fix:style": "yarn run prettier ./packages/tldraw/src --write",
+    "lerna": "lerna",
+    "test": "lerna run test --stream",
+    "test:ci": "lerna run test:ci --stream",
+    "test:watch": "lerna run test:watch --stream",
+    "docs": "lerna run typedoc",
+    "docs:watch": "lerna run typedoc --watch"
+  },
+  "version": "0.0.1",
+  "repository": "git@github.com:nimeshnayaju/tldrawe.git",
+  "author": "nimeshnayaju <nimeshnayaju@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/chrome": "^0.0.178",
+    "@types/jest": "^27.4.0",
+    "@types/mocha": "^9.1.0",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.6.0",
+    "jest": "^27.4.7",
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  }
+}

@@ -10,7 +10,6 @@
       "~*": ["./src/*"]
     }
   },
-  "references": [{ "path": "../vec" }, { "path": "../intersect" }, { "path": "../core" }],
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "docs"
