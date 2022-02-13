@@ -1,15 +1,15 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
 
   "name": "tldrawe",
   "description": "Draw on any webpage with tldraw",
-  "version": "1.0",
+  "version": "0.1",
 
   "options_ui": {
     "page": "options.html"
   },
 
-  "action": {
+  "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
@@ -17,15 +17,20 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/vendor.js", "js/content_script.js"]
+      "js": ["js/vendor.js", "js/content.js"]
     }
   ],
 
   "background": {
-    "service_worker": "js/background.js"
+    "persistent": false,
+    "scripts": ["js/background.js"]
   },
 
   "permissions": ["storage"],
 
-  "host_permissions": ["<all_urls>"]
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{534e0a54-1bc9-4c1a-bf03-c3f4ea70cc01}"
+    }
+  }
 }

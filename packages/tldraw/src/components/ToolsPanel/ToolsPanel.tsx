@@ -21,7 +21,7 @@ export const ToolsPanel = React.memo(function ToolsPanel({ onBlur }: ToolsPanelP
   return (
     <StyledToolsPanelContainer onBlur={onBlur}>
       <StyledCenterWrap id="TD-Tools">
-        <BackToContent />
+        {/* <BackToContent /> */}
         <StyledPrimaryTools>
           <ActionButton />
           <PrimaryTools />
@@ -38,19 +38,13 @@ export const ToolsPanel = React.memo(function ToolsPanel({ onBlur }: ToolsPanelP
 })
 
 const StyledToolsPanelContainer = styled('div', {
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  right: 0,
+  display: 'grid',
+  justifyContent: 'flex-start',
+  alignSelf: 'center',
   width: '100%',
   minWidth: 0,
   maxWidth: '100%',
-  display: 'grid',
-  gridTemplateColumns: 'auto auto auto',
-  gridTemplateRows: 'auto auto',
-  justifyContent: 'space-between',
-  padding: '0',
-  gap: '$4',
+  padding: '15 0',
   zIndex: 200,
   pointerEvents: 'none',
   '& > div > *': {
@@ -69,14 +63,15 @@ const StyledCenterWrap = styled('div', {
   gap: '$4',
 })
 
-const StyledStatusWrap = styled('div', {
-  gridRow: 2,
-  gridColumn: '1 / span 3',
-})
-
 const StyledPrimaryTools = styled('div', {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
   gap: '$2',
+  flexDirection: 'column',
+})
+
+const StyledStatusWrap = styled('div', {
+  gridRow: 2,
+  gridColumn: '1 / span 3',
 })

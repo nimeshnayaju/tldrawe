@@ -1,6 +1,6 @@
 {
   "name": "@tldrawe/extension",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Draw on any webpage with tldraw",
   "main": "index.js",
   "scripts": {
@@ -21,15 +21,19 @@
     "@tldrawe/tldraw": "^1.6.1",
     "mobx": "^6.3.13",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "is-hotkey": "0.2.0",
+    "webextension-polyfill": "^0.8.0"
   },
   "devDependencies": {
     "@tldraw/core": "^1.6.1",
     "@types/chrome": "^0.0.178",
+    "@types/webextension-polyfill": "^0.8.0",
     "@types/jest": "^27.4.0",
     "@types/mocha": "^9.1.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/is-hotkey": "0.1.7",
     "copy-webpack-plugin": "^9.0.1",
     "glob": "^7.1.6",
     "jest": "^27.2.1",

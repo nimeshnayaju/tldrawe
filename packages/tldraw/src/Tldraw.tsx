@@ -121,6 +121,8 @@ export function Tldraw({
   onAssetCreate,
   onAssetDelete,
   onExport,
+  onPan,
+  onZoom,
 }: TldrawProps) {
   const [sId, setSId] = React.useState(id)
 
@@ -145,6 +147,8 @@ export function Tldraw({
       onChangePage,
       onAssetDelete,
       onAssetCreate,
+      onPan,
+      onZoom,
     })
     return app
   })
@@ -173,6 +177,8 @@ export function Tldraw({
       onAssetDelete,
       onAssetCreate,
       onExport,
+      onPan,
+      onZoom,
     })
     setSId(id)
     setApp(newApp)
@@ -227,6 +233,8 @@ export function Tldraw({
       onAssetDelete,
       onAssetCreate,
       onExport,
+      onPan,
+      onZoom,
     }
   }, [
     onMount,
@@ -248,6 +256,8 @@ export function Tldraw({
     onAssetDelete,
     onAssetCreate,
     onExport,
+    onPan,
+    onZoom,
   ])
 
   // Use the `key` to ensure that new selector hooks are made when the id changes
@@ -333,12 +343,21 @@ const InnerTldraw = React.memo(function InnerTldraw({
         brushStroke: 'rgba(180, 180, 180, .25)',
         selected: 'rgba(38, 150, 255, 1.000)',
         selectFill: 'rgba(38, 150, 255, 0.05)',
-        background: '#212529',
+        // background: '#212529',
+        background: 'none',
         foreground: '#49555f',
       }
     }
 
-    return {}
+    return {
+      brushFill: 'rgba(0,0,0,.05)',
+      brushStroke: 'rgba(0,0,0,.25)',
+      selected: 'rgba(38, 150, 255, 1.000)',
+      selectFill: 'rgba(65, 132, 244, 0.05)',
+      // background: 'rgb(248, 249, 250)',
+      background: 'none',
+      foreground: 'rgb(51, 51, 51)',
+    }
   }, [settings.isDarkMode])
 
   const isInSession = app.session !== undefined

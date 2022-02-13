@@ -15,6 +15,7 @@ import {
   Utils,
   TLBounds,
   TLDropEventHandler,
+  TLPointerInfo,
 } from '@tldraw/core'
 import {
   FlipType,
@@ -165,6 +166,14 @@ export interface TDCallbacks {
    * (optional) A callback to run when the user exports their page or selection.
    */
   onExport?: (info: TDExport) => Promise<void>
+  /**
+   * (optional) A callback to run when the user pans the camera
+   */
+  onPan?: (info: TLPointerInfo<string>, e: React.WheelEvent<Element> | WheelEvent) => void
+  /**
+   * (optional) A callback to run when the user zooms the camera in/out
+   */
+  onZoom?: (info: TLPointerInfo<string>, e: React.WheelEvent<Element> | WheelEvent) => void
 }
 
 export class TldrawApp extends StateManager<TDSnapshot> {
@@ -217,6 +226,10 @@ export class TldrawApp extends StateManager<TDSnapshot> {
 
   fileSystemHandle: FileSystemHandle | null = null
 
+  isPanPaused = false
+
+  isZoomPaused = false
+
   viewport = Utils.getBoundsFromPoints([
     [0, 0],
     [100, 100],
@@ -260,6 +273,15 @@ export class TldrawApp extends StateManager<TDSnapshot> {
     })
 
     this.callbacks = callbacks
+  }
+
+  /* -------------------- Teledraw -------------------- */
+  pausePan = () => {
+    this.isPanPaused = true
+  }
+
+  pauseZoom = () => {
+    this.isZoomPaused = true
   }
 
   /* -------------------- Internal -------------------- */
@@ -3061,33 +3083,39 @@ export class TldrawApp extends StateManager<TDSnapshot> {
   onPinch: TLPinchEventHandler = (info, e) => this.currentTool.onPinch?.(info, e)
 
   onPan: TLWheelEventHandler = (info, e) => {
-    if (this.appState.status === 'pinching') return
-    // TODO: Pan and pinchzoom are firing at the same time. Considering turning one of them off!
+    if (!this.isPanPaused) {
+      if (this.appState.status === 'pinching') return
+      // TODO: Pan and pinchzoom are firing at the same time. Considering turning one of them off!
 
-    const delta = Vec.div(info.delta, this.pageState.camera.zoom)
-    const prev = this.pageState.camera.point
-    const next = Vec.sub(prev, delta)
+      const delta = Vec.div(info.delta, this.pageState.camera.zoom)
+      const prev = this.pageState.camera.point
+      const next = Vec.sub(prev, delta)
 
-    if (Vec.isEqual(next, prev)) return
+      if (Vec.isEqual(next, prev)) return
 
-    this.pan(delta)
+      this.pan(delta)
 
-    // When panning, we also want to call onPointerMove, except when "force panning" via spacebar / middle wheel button (it's called elsewhere in that case)
-    if (!this.isForcePanning) this.onPointerMove(info, e as unknown as React.PointerEvent)
+      // When panning, we also want to call onPointerMove, except when "force panning" via spacebar / middle wheel button (it's called elsewhere in that case)
+      if (!this.isForcePanning) this.onPointerMove(info, e as unknown as React.PointerEvent)
+    }
+    this.callbacks.onPan?.(info, e)
   }
 
   onZoom: TLWheelEventHandler = (info, e) => {
-    if (this.state.appState.status !== TDStatus.Idle) return
+    if (!this.isZoomPaused) {
+      if (this.state.appState.status !== TDStatus.Idle) return
 
-    const delta =
-      e.deltaMode === WheelEvent.DOM_DELTA_PIXEL
-        ? info.delta[2] / 500
-        : e.deltaMode === WheelEvent.DOM_DELTA_LINE
-        ? info.delta[2] / 100
-        : info.delta[2] / 2
+      const delta =
+        e.deltaMode === WheelEvent.DOM_DELTA_PIXEL
+          ? info.delta[2] / 500
+          : e.deltaMode === WheelEvent.DOM_DELTA_LINE
+          ? info.delta[2] / 100
+          : info.delta[2] / 2
 
-    this.zoomBy(delta, this.centerPoint)
-    this.onPointerMove(info, e as unknown as React.PointerEvent)
+      this.zoomBy(delta, this.centerPoint)
+      this.onPointerMove(info, e as unknown as React.PointerEvent)
+    }
+    this.callbacks.onZoom?.(info, e)
   }
 
   /* ----------------- Pointer Events ----------------- */

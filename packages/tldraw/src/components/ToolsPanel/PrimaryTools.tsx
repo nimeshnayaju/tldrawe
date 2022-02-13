@@ -48,7 +48,7 @@ export const PrimaryTools = React.memo(function PrimaryTools(): JSX.Element {
   }, [app])
 
   return (
-    <Panel side="center" id="TD-PrimaryTools">
+    <Panel side="center" css={{ flexDirection: 'column' }} id="TD-PrimaryTools">
       <ToolButtonWithTooltip
         kbd={'1'}
         label={'select'}

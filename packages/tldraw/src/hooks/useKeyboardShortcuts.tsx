@@ -265,60 +265,62 @@ export function useKeyboardShortcuts(ref: React.RefObject<HTMLDivElement>) {
 
   /* -------------------- Commands -------------------- */
 
+  // Disabling zoom events for now
+
   // Camera
 
-  useHotkeys(
-    'ctrl+=,⌘+=,ctrl+num_subtract,⌘+num_subtract',
-    (e) => {
-      if (!canHandleEvent(true)) return
-      app.zoomIn()
-      e.preventDefault()
-    },
-    undefined,
-    [app]
-  )
+  // useHotkeys(
+  //   'ctrl+=,⌘+=,ctrl+num_subtract,⌘+num_subtract',
+  //   (e) => {
+  //     if (!canHandleEvent(true)) return
+  //     app.zoomIn()
+  //     e.preventDefault()
+  //   },
+  //   undefined,
+  //   [app]
+  // )
 
-  useHotkeys(
-    'ctrl+-,⌘+-,ctrl+num_add,⌘+num_add',
-    (e) => {
-      if (!canHandleEvent(true)) return
+  // useHotkeys(
+  //   'ctrl+-,⌘+-,ctrl+num_add,⌘+num_add',
+  //   (e) => {
+  //     if (!canHandleEvent(true)) return
 
-      app.zoomOut()
-      e.preventDefault()
-    },
-    undefined,
-    [app]
-  )
+  //     app.zoomOut()
+  //     e.preventDefault()
+  //   },
+  //   undefined,
+  //   [app]
+  // )
 
-  useHotkeys(
-    'shift+0,ctrl+numpad_0,⌘+numpad_0',
-    () => {
-      if (!canHandleEvent(true)) return
-      app.resetZoom()
-    },
-    undefined,
-    [app]
-  )
+  // useHotkeys(
+  //   'shift+0,ctrl+numpad_0,⌘+numpad_0',
+  //   () => {
+  //     if (!canHandleEvent(true)) return
+  //     app.resetZoom()
+  //   },
+  //   undefined,
+  //   [app]
+  // )
 
-  useHotkeys(
-    'shift+1',
-    () => {
-      if (!canHandleEvent(true)) return
-      app.zoomToFit()
-    },
-    undefined,
-    [app]
-  )
+  // useHotkeys(
+  //   'shift+1',
+  //   () => {
+  //     if (!canHandleEvent(true)) return
+  //     app.zoomToFit()
+  //   },
+  //   undefined,
+  //   [app]
+  // )
 
-  useHotkeys(
-    'shift+2',
-    () => {
-      if (!canHandleEvent(true)) return
-      app.zoomToSelection()
-    },
-    undefined,
-    [app]
-  )
+  // useHotkeys(
+  //   'shift+2',
+  //   () => {
+  //     if (!canHandleEvent(true)) return
+  //     app.zoomToSelection()
+  //   },
+  //   undefined,
+  //   [app]
+  // )
 
   // Duplicate
 
