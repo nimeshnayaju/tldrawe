@@ -1,5 +1,6 @@
 import React from 'react'
 import browser from 'webextension-polyfill'
+import './styles.css'
 
 const Popup = () => {
   const onToggle = React.useCallback(() => {
@@ -15,7 +16,9 @@ const Popup = () => {
 
   return (
     <>
-      <button onClick={onToggle}>Toggle tldraw overlay</button>
+      <button className="popup-btn" onClick={onToggle}>
+        Toggle tldraw overlay
+      </button>
     </>
   )
 }
