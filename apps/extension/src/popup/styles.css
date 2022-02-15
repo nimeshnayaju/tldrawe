@@ -1,71 +1,73 @@
-.popup-btn {
-  background-color: rgba(66, 133, 244, 1);
-  border-radius: 3px;
-  border: none;
+* {
   box-sizing: border-box;
-  color: white;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, 'Segoe UI', 'Liberation Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  padding: 8px 6px;
-  line-height: 1rem;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
 }
 
-.popup-btn:hover {
+body {
+  margin: 15px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.popup-btn:focus {
-  outline: 1px transparent;
-}
-
-/* CSS */
-.button-8 {
-  background-color: #e1ecf4;
-  border-radius: 3px;
-  border: 1px solid #7aa7c7;
-  box-shadow: rgba(255, 255, 255, 0.7) 0 1px 0 0 inset;
-  box-sizing: border-box;
-  color: #39739d;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, 'Segoe UI', 'Liberation Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.15385;
-  margin: 0;
-  outline: none;
-  padding: 8px 0.8em;
+.popup-panel {
   position: relative;
-  text-align: center;
-  text-decoration: none;
+  overflow: hidden;
   user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: baseline;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  background-color: #fefefe;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: rgb(0 0 0 / 2%) 0 1px 3px 0;
+  padding: 4px;
 }
 
-.button-8:hover,
-.button-8:focus {
-  background-color: #b3d3ea;
-  color: #2c5777;
+.popup-btn {
+  position: relative;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 32px;
+  outline: none;
+  color: #333333;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 4px;
+  user-select: none;
+  margin: 0px;
+  padding: 0px;
 }
 
-.button-8:focus {
-  box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+.popup-btn-inner {
+  height: 100%;
+  width: 100%;
+  background-color: #fefefe;
+  border-radius: inherit;
+  display: flex;
+  gap: 3px;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 8px;
+  justify-content: space-between;
+  border: 1px solid transparent;
 }
 
-.button-8:active {
-  background-color: #a0c7e4;
-  box-shadow: none;
-  color: #2c5777;
+.popup-btn-inner:focus,
+.popup-btn-inner:hover {
+  background-color: #ececec;
+}
+
+.popup-btn-inner .popup-btn-kbd {
+  margin-left: 8px;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+  text-align: center;
+  font-size: 10px;
+  color: #333332;
+  background: none;
+  font-weight: 500;
+  gap: 3px;
+  display: flex;
+  align-items: center;
 }

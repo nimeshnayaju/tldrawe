@@ -2,11 +2,32 @@ import React from 'react'
 import { TDDocument, TldrawApp } from '@tldrawe/tldraw'
 import { TLWheelEventHandler } from '@tldraw/core'
 import Vec from '@tldraw/vec'
+import { normalizeDelta } from '../utils'
+import browser from 'webextension-polyfill'
 
 const SESSION_STORAGE_KEY = 'tldraw'
 
 export function usePan() {
   const [tldraw, setTldraw] = React.useState<TldrawApp>()
+  const [zoom, setZoom] = React.useState<number>(1)
+  const isPanning = React.useRef<boolean>(false)
+  const yOffset = React.useRef<number>(window.scrollY)
+
+  /**
+   * Request for the page zoom info on mount
+   */
+  React.useEffect(() => {
+    browser.runtime
+      .sendMessage({
+        type: 'zoom',
+      })
+      .then((result: any) => {
+        setZoom(result as number)
+      })
+      .catch((err) => {
+        console.warn(err)
+      })
+  }, [])
 
   const onMount = React.useCallback((app: TldrawApp) => {
     app.pausePan() // Turn off the app's pan handling
@@ -18,7 +39,7 @@ export function usePan() {
     }
     // reset camera on mount and pan camera to the y-offset of the page
     app.resetCamera()
-    app.pan([0, window.pageYOffset])
+    app.pan([0, window.scrollY])
     setTldraw(app)
   }, [])
 
@@ -31,39 +52,19 @@ export function usePan() {
 
       if (tldraw.appState.status === 'pinching') return
 
-      const delta = Vec.div(info.delta, tldraw.pageState.camera.zoom)
-
-      // Disable horizontal panning
-      // TODO: Enable horizontal panning so that the canvas pans horizontally accordingly as the user scrolls horizontally
-      delta[0] = 0
-
-      // get the height of the document
-      const scrollHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight,
-        document.body.clientHeight,
-        document.documentElement.clientHeight
-      )
-
-      // Normalize delta value for vertical panning (y-axis)
-      if (delta[1] < 0) {
-        delta[1] = Math.max(delta[1], -1 * window.pageYOffset)
-      } else {
-        delta[1] = Math.min(delta[1], scrollHeight - window.innerHeight - window.pageYOffset)
-      }
+      const normalizedDelta = normalizeDelta(info.delta, zoom)
 
       const prev = tldraw.pageState.camera.point
-      const next = Vec.sub(prev, delta)
+      const next = Vec.sub(prev, normalizedDelta)
 
       if (Vec.isEqual(next, prev)) return
 
-      window.scrollBy(0, delta[1])
+      isPanning.current = true
+      window.scrollBy(0, normalizedDelta[1])
 
-      tldraw.pan(delta)
+      tldraw.pan(normalizedDelta)
     },
-    [tldraw]
+    [tldraw, zoom]
   )
 
   /**
@@ -71,13 +72,41 @@ export function usePan() {
    */
   const onChangePage = React.useCallback(
     (app: TldrawApp) => {
-      console.log('changing')
       sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(app.document))
     },
     [SESSION_STORAGE_KEY]
   )
 
+  const onScrollHandler = React.useCallback(
+    (e: Event) => {
+      const yDelta = window.scrollY - yOffset.current
+      yOffset.current = window.scrollY
+      // if the scroll event was triggered programmatically, i.e., as a result of panning the canvas,
+      // no need to deal with it
+      if (isPanning.current) {
+        isPanning.current = false
+        return
+      }
+      if (tldraw) {
+        tldraw.pan([0, yDelta])
+      }
+    },
+    [tldraw]
+  )
+
+  /**
+   * Register an event listener to listen to user generated scroll events
+   */
+  React.useEffect(() => {
+    window.addEventListener('scroll', onScrollHandler)
+
+    return () => {
+      window.removeEventListener('scroll', onScrollHandler)
+    }
+  }, [onScrollHandler])
+
   return {
+    setZoom,
     onMount,
     onPan,
     onChangePage,

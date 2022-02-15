@@ -262,33 +262,21 @@ export const Menu = React.memo(function Menu({ showSponsorLink, readOnly }: Menu
             </DMSubMenu>
           </>
         )}
-        <a href="https://tldraw.com/r">
-          <DMItem id="TD-MenuItem-Create_a_Multiplayer_Room">Create a Multiplayer Room</DMItem>
-        </a>
-        <DMDivider dir="ltr" />
         <PreferencesMenu />
         <DMDivider dir="ltr" />
         <a href="https://github.com/Tldraw/Tldraw" target="_blank" rel="nofollow">
           <DMItem id="TD-MenuItem-Github">
-            GitHub
+            Tldraw
             <SmallIcon>
               <GitHubLogoIcon />
             </SmallIcon>
           </DMItem>
         </a>
-        <a href="https://twitter.com/Tldraw" target="_blank" rel="nofollow">
-          <DMItem id="TD-MenuItem-Twitter">
-            Twitter
+        <a href="https://github.com/nimeshnayaju/tldrawe" target="_blank" rel="nofollow">
+          <DMItem id="TD-MenuItem-Github">
+            Tldrawe
             <SmallIcon>
-              <TwitterLogoIcon />
-            </SmallIcon>
-          </DMItem>
-        </a>
-        <a href="https://discord.gg/SBBEVCA4PG" target="_blank" rel="nofollow">
-          <DMItem id="TD-MenuItem-Discord">
-            Discord
-            <SmallIcon>
-              <DiscordIcon />
+              <GitHubLogoIcon />
             </SmallIcon>
           </DMItem>
         </a>

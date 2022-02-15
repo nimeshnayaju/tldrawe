@@ -5,13 +5,12 @@
     "apps/extension"
   ],
   "scripts": {
-    "build": "lerna run build --stream",
-    "build:www": "yarn build:packages && cd apps/www && yarn build",
+    "build:extension": "yarn build:packages && cd apps/extension && yarn build",
     "build:packages": "lerna run build:packages --stream",
     "build:apps": "lerna run build:apps",
     "start": "yarn build:packages && lerna run start --stream --parallel",
     "start:all": "yarn build:packages && lerna run start:all --stream --parallel",
-    "start:www": "yarn build:packages && lerna run start --parallel & cd apps/www && yarn dev",
+    "start:extension": "yarn build:packages && cd apps/extension && yarn start",
     "clean": "lerna run clean --parallel",
     "publish:patch": "yarn build:packages && yarn test && lerna publish",
     "fix:style": "yarn run prettier ./packages/tldraw/src --write",

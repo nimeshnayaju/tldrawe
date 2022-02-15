@@ -15,11 +15,18 @@ const Popup = () => {
   }, [])
 
   return (
-    <>
+    <div className="popup-panel">
       <button className="popup-btn" onClick={onToggle}>
-        Toggle tldraw overlay
+        <div className="popup-btn-inner">
+          Toggle overlay
+          <div className="popup-btn-kbd">
+            <span>⌘</span>
+            <span>⇧</span>
+            <span>E</span>
+          </div>
+        </div>
       </button>
-    </>
+    </div>
   )
 }
 

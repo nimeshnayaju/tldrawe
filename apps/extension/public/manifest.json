@@ -3,7 +3,7 @@
 
   "name": "tldrawe",
   "description": "Draw on any webpage with tldraw",
-  "version": "0.1",
+  "version": "0.2",
 
   "options_ui": {
     "page": "options.html"
@@ -22,11 +22,8 @@
   ],
 
   "background": {
-    "persistent": false,
     "scripts": ["js/background.js"]
   },
-
-  "permissions": ["storage"],
 
   "browser_specific_settings": {
     "gecko": {

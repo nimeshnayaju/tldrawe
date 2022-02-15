@@ -8,7 +8,7 @@ const TOGGLE_OVERLAY = 'mod+shift+e'
 
 const Content = () => {
   const [showOverlay, setShowOverlay] = React.useState<boolean>(false)
-  const { onMount, onPan, onChangePage } = usePan()
+  const { setZoom, onMount, onPan, onChangePage } = usePan()
 
   /**
    * Register an event listener to listen to keyboard events to toggle overlay
@@ -31,16 +31,19 @@ const Content = () => {
    * Register an event listener to listen to messages from an extension process
    */
   React.useEffect(() => {
-    const onReceiveToggle = (message: any) => {
+    const onReceiveMessage = (message: any) => {
       if (message.toggle) {
         setShowOverlay((showOverlay) => !showOverlay)
       }
+      if (message.zoom) {
+        setZoom(message.zoom)
+      }
     }
 
-    browser.runtime.onMessage.addListener(onReceiveToggle)
+    browser.runtime.onMessage.addListener(onReceiveMessage)
 
     return () => {
-      browser.runtime.onMessage.removeListener(onReceiveToggle)
+      browser.runtime.onMessage.removeListener(onReceiveMessage)
     }
   }, [])
 
@@ -59,7 +62,7 @@ const Content = () => {
           <Tldraw
             onPan={onPan}
             onMount={onMount}
-            showMenu={false}
+            showMenu={true}
             showSponsorLink={false}
             showZoom={false}
             showPages={false}
